@@ -47,19 +47,4 @@ if (!$stupidQuestion->checkAnswer()) {
 	return false;
 }
 return true;
-
-if (!function_exists('stupidQuestionBeforeFormParse')) {
-
-	function stupidQuestionBeforeFormParse(&$fields) {
-		$stupidQuestion = new stupidQuestion($GLOBALS['SQ_language']);
-		$stupidQuestion->cleanUp();
-		if ($GLOBALS['SQ_eFormOnMailSent'] && function_exists($GLOBALS['SQ_eFormOnMailSent'])) {
-			return $GLOBALS['SQ_eFormOnMailSent']($fields);
-		}
-		return true;
-	}
-
-}
-
-return true;
 ?>
