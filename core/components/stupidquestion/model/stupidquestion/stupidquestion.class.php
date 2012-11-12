@@ -106,6 +106,7 @@ if (!class_exists('stupidQuestion')) {
 			$randAnswer = rand(0, count($this->settings['answer']) - 1);
 			$randFormField = rand(0, count($this->settings['formFields']) - 1);
 
+			// reset session if $_POST is not filled
 			if (!count($_POST)) {
 				unset($_SESSION['StupidQuestion'], $_SESSION['StupidQuestionFormField'], $_SESSION['StupidQuestionAnswer']);
 			}
