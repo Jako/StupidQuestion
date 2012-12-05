@@ -33,17 +33,20 @@ $answers = $modx->getOption('stupidQuestionAnswers', $scriptProperties, '');
 $language = $modx->getOption('stupidQuestionLanguage', $scriptProperties, 'en');
 $formcode = $modx->getOption('stupidQuestionFormcode', $scriptProperties, '');
 
-$stupidQuestion = new stupidQuestion($modx, $language, $formcode, $answers);
+// Init class
+if (!isset($modx->stupidQuestion)) {
+	$modx->stupidQuestion = new stupidQuestion($modx, $language, $formcode, $answers);
+}
 
 if (true) {
-	$stupidQuestion->output['htmlCode'] .= $stupidQuestion->output['jsCode'];
+	$modx->stupidQuestion->output['htmlCode'] .= $modx->stupidQuestion->output['jsCode'];
 } else {
-	$modx->regClientScript($stupidQuestion->output['jsCode']);
+	$modx->regClientScript($modx->stupidQuestion->output['jsCode']);
 }
-$modx->setPlaceholder('formit.stupidquestion_html', $stupidQuestion->output['htmlCode']);
+$modx->setPlaceholder('formit.stupidquestion_html', $modx->stupidQuestion->output['htmlCode']);
 
-if (!$stupidQuestion->checkAnswer()) {
-	$modx->setPlaceholder('fi.error.' . $stupidQuestion->answer['formfield'], '<span class="error">' . $stupidQuestion->output['errorMessage'] . '</span>');
+if (!$modx->stupidQuestion->checkAnswer()) {
+	$modx->setPlaceholder('fi.error.' . $modx->stupidQuestion->answer['formfield'], '<span class="error">' . $modx->stupidQuestion->output['errorMessage'] . '</span>');
 	return false;
 }
 return true;

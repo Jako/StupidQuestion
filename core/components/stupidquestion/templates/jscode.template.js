@@ -1,4 +1,6 @@
-var el = document.getElementById("[[+id]]");
-el.value = "[[+othervalue]]";
-el.value = "[[+value]]";
-el.parentNode.style.display = "none";
+var el = document.getElementsByName("[+id+]");
+for (var i = 0; i < el.length; i++) {
+	el[i].value = "[+othervalue+]";
+	el[i].value = "[+value+]";
+	el[i].parentNode.style.display = "none";
+}
