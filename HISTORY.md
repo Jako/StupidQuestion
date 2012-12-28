@@ -1,6 +1,8 @@
 History
 ================================================================================
 
+- 0.7.1
+    - Added: stupidQuestionRegister parameter
 - 0.7
     - MODX Revolution branch
 - 0.6

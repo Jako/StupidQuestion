@@ -26,13 +26,19 @@ The snippet has to be used as FormIt preHook.
 
 with the following properties
 
-Property | Description | Default
----- | ----------- | -------
-stupidQuestionAnswers | Answers for the stupid question (JSON encoded array of \'forename name\' combinations) | language dependent
-stupidQuestionLanguage | Language of the stupid question | en
-stupidQuestionFormcode | Template chunk for the stupid question html form field | content of the file `formcode.template.html` in folder `core/components/stupidquestion/templates`
+Property               | Description                    | Default
+---------------------- | -------------------------------| -------
+stupidQuestionAnswers  | Answers for the stupid         | language dependent
+                       | question - JSON encoded array  |
+                       | of forename name combinations  | 
+stupidQuestionLanguage | Language of the question       | en
+stupidQuestionFormcode | Template chunk for the stupid  | content of the file
+                       | question html form field       | formcode.template.html 
+stupidQuestionRegister | Move the filling javascript to | false
+                       | the end of the html body       |
 
-If you want to change the html code for the stupid question form field, put this default code in a chunk and modify it:
+If you want to change the html code for the stupid question form field, put 
+this default code in a chunk and modify it:
 
 <div>
 	<label for="[[+id]]">[[+question]]</label>
@@ -44,5 +50,7 @@ form code.
 
 Notes:
 --------------------------------------------------------------------------------
-1. Uses: PHP packer implementation on http://joliclic.free.fr/php/javascript-packer/en/
-2. Bases on a captcha idea of Peter Kröner: http://www.peterkroener.de/dumme-frage-captchas-automatisch-ausfuellen/
+1. Uses: PHP packer implementation on 
+   http://joliclic.free.fr/php/javascript-packer/en/
+2. Bases on a captcha idea of Peter Kröner: 
+   http://www.peterkroener.de/dumme-frage-captchas-automatisch-ausfuellen/

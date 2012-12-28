@@ -32,13 +32,14 @@ include SQ_BASE_PATH . 'model/stupidquestion/stupidquestion.class.php';
 $answers = $modx->getOption('stupidQuestionAnswers', $scriptProperties, '');
 $language = $modx->getOption('stupidQuestionLanguage', $scriptProperties, 'en');
 $formcode = $modx->getOption('stupidQuestionFormcode', $scriptProperties, '');
+$register = (boolean) $modx->getOption('stupidQuestionRegister', $scriptProperties, '0');
 
 // Init class
 if (!isset($modx->stupidQuestion)) {
 	$modx->stupidQuestion = new stupidQuestion($modx, $language, $formcode, $answers);
 }
 
-if (true) {
+if (!$register) {
 	$modx->stupidQuestion->output['htmlCode'] .= $modx->stupidQuestion->output['jsCode'];
 } else {
 	$modx->regClientScript($modx->stupidQuestion->output['jsCode']);

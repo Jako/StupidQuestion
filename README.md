@@ -27,6 +27,7 @@ Property | Description | Default
 stupidQuestionAnswers | Answers for the stupid question (JSON encoded array of \'forename name\' combinations) | language dependent
 stupidQuestionLanguage | Language of the stupid question | en
 stupidQuestionFormcode | Template chunk for the stupid question html form field | content of the file `formcode.template.html` in folder `core/components/stupidquestion/templates`
+stupidQuestionRegister | Move the filling javascript to the end of the html body
 
 If you want to change the html code for the stupid question form field, put this default code in a chunk and modify it:
 

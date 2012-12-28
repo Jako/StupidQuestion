@@ -24,9 +24,9 @@
  */
 
 if (!class_exists('JavaScriptPacker')) {
-	include SQ_BASE_PATH . 'model/includes/class.JavaScriptPacker.php';
+	include SQ_BASE_PATH . 'model/packer/class.JavaScriptPacker.php';
 }
-include SQ_BASE_PATH . 'model/includes/include.parsetpl.php';
+include SQ_BASE_PATH . 'model/chunkie/chunkie.class.inc.php';
 
 if (!class_exists('stupidQuestion')) {
 
@@ -76,7 +76,7 @@ if (!class_exists('stupidQuestion')) {
 			$this->settings['questions_second'] = $this->modx->fromJson($this->modx->lexicon('stupidquestion.questions_second'));
 			$this->settings['questions'] = array_merge($this->settings['questions_first'], $this->settings['questions_second']);
 			$this->settings['intro'] = $this->modx->fromJson($this->modx->lexicon('stupidquestion.intro'));
-			if ($answer != '') {
+			if ($answer == '') {
 				$this->settings['answer'] = $this->modx->fromJson($this->modx->lexicon('stupidquestion.answer'));
 			} else {
 				$this->settings['answer'] = $this->modx->fromJson($answer);
@@ -133,32 +133,40 @@ if (!class_exists('stupidQuestion')) {
 			$formField = $this->settings['formFields'][$randFormField];
 
 			// parse stupid question template and javscript template
-			$jsCode = parseTpl($this->templates['jscode'], array(
+			$parser = new revoChunkie($this->templates['jscode']);
+			$parser->CreateVars(array(
 				'id' => $formField,
 				'othervalue' => $othervalue,
-				'value' => $value,
-				'tplPath' => '')
+				'value' => $value)
 			);
-			$question = parseTpl('@INLINE ' . $this->settings['intro'][$randIntro], array(
-				'question' => $frage . $this->settings['answer'][$randAnswer],
-				'tplPath' => '')
+			$jsCode = $parser->Render();
+
+			$parser = new revoChunkie('@INLINE ' . $this->settings['intro'][$randIntro]);
+			$parser->CreateVars(array(
+				'question' => $frage . $this->settings['answer'][$randAnswer])
 			);
-			$this->output['htmlCode'] = parseTpl($this->templates['formcode'], array(
+			$question = $parser->Render();
+
+			$parser = new revoChunkie($this->templates['formcode']);
+			$parser->CreateVars(array(
 				'id' => $formField,
 				'value' => $value,
 				'question' => $question,
 				'required' => $this->settings['required'],
-				'requiredMessage' => $this->settings['requiredMessage'],
-				'tplPath' => '')
+				'requiredMessage' => $this->settings['requiredMessage'])
 			);
+			$this->output['htmlCode'] = $parser->Render();
+
 			$this->answer['answer'] = $value;
 			$this->answer['formfield'] = $formField;
 
 			$packer = new JavaScriptPacker($jsCode, 'Normal', true, false);
-			$this->output['jsCode'] = parseTpl($this->templates['jswrapper'], array(
-				'packed' => trim($packer->pack()),
-				'tplPath' => '')
+			$parser = new revoChunkie($this->templates['jswrapper']);
+			$parser->CreateVars(array(
+				'packed' => trim($packer->pack()))
 			);
+			$this->output['jsCode'] = $parser->Render();
+
 			return;
 		}
 

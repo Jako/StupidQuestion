@@ -29,7 +29,7 @@ $properties = array(
 		'desc' => 'prop_stupidquestion.stupidQuestionAnswers',
 		'type' => 'textfield',
 		'options' => '',
-		'value' => '{"Karl Valentin", "Peter Alexander", "Elke Sommer", "Anna Blume"}',
+		'value' => '',
 		'lexicon' => 'stupidquestion:properties',
 	),
 	array(
@@ -46,6 +46,14 @@ $properties = array(
 		'type' => 'textfield',
 		'options' => '',
 		'value' => '',
+		'lexicon' => 'stupidquestion:properties',
+	),
+	array(
+		'name' => 'stupidQuestionRegister',
+		'desc' => 'prop_stupidquestion.stupidQuestionRegister',
+		'type' => 'combo-boolean',
+		'options' => '',
+		'value' => false,
 		'lexicon' => 'stupidquestion:properties',
 	)
 );
