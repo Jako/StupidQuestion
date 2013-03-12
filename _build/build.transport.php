@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -20,6 +18,8 @@
  *
  * @package stupidquestion
  * @subpackage build
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * StupidQuestion build script
  */
@@ -32,7 +32,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME', 'StupidQuestion');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
-define('PKG_VERSION', '0.7.1');
+define('PKG_VERSION', '0.7.2');
 define('PKG_RELEASE', 'pl');
 
 /* define sources */

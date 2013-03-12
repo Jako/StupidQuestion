@@ -1,24 +1,66 @@
 <?php
-/*
+/**
  * Name: revoChunkie
  * Original name: Chunkie
- * Version: 1.0
- * Author: Armand "bS" Pondman (apondman@zerobarrier.nl)
- * Date: Oct 8, 2006 00:00 CET
- * Modified for Revolution by Thomas Jakobi (thomas.jakobi@partout.info)
+ * Version: 2.0
+ * 
+ * Author: Armand "bS" Pondman <apondman@zerobarrier.nl>
+ * Date: Oct 8, 2006
+ *
+ * Modified and documented for Revolution by Thomas Jakobi <thomas.jakobi@partout.info>
+ * Date: Mar 11, 2013
  */
 
 if (!class_exists('revoChunkie')) {
 
 	class revoChunkie {
 
+		/**
+		 * The name of a MODX chunk (could be prefixed by @FILE, @INLINE or
+		 * @CHUNK). Chunknames starting with '@FILE ' are loading a chunk from
+		 * the filesystem (prefixed by $basepath). Chunknames starting with
+		 * '@INLINE ' contain the template code itself.
+		 *
+		 * @var string $template
+		 * @access private
+		 */
 		private $template;
+
+		/**
+		 * The basepath @FILE is prefixed with.
+		 * @var string $basepath
+		 * @access private
+		 */
 		private $basepath;
+
+		/**
+		 * A collection of all placeholders.
+		 * @var array $placeholders
+		 * @access private
+		 */
 		private $placeholders;
+
+		/**
+		 * The current depth of the placeholder keypath.
+		 * @var array $depth
+		 * @access private
+		 */
 		private $depth;
+
+		/**
+		 * The maximum depth of the placeholder keypath.
+		 * @var int $maxdepth
+		 * @access private
+		 */
 		private $maxdepth;
 
-		function revoChunkie($template = '', $basepath = '') {
+		/**
+		 * revoChunkie constructor
+		 *
+		 * @param string $template Name of MODX chunk
+		 * @param string $basepath Basepath @FILE is prefixed with.
+		 */
+		public function revoChunkie($template = '', $basepath = '') {
 			global $modx;
 
 			$this->template = $this->getTemplate($template);
@@ -27,18 +69,38 @@ if (!class_exists('revoChunkie')) {
 			$this->basepath = ($basepath == '') ? $modx->getOption('core_path') : $modx->getOption('base_path') . $basepath;
 		}
 
-		function setBasepath($basepath) {
-			global $modx;
-
+		/**
+		 * Set the basepath @FILE is prefixed with.
+		 *
+		 * @access public
+		 * @param string $basepath The basepath @FILE is prefixed with.
+		 */
+		public function setBasepath($basepath) {
 			$this->basepath = $basepath;
 		}
 
-		function CreateVars($value = '', $key = '', $path = '') {
+		/**
+		 * Fill placeholder array with values. If $value contains a nested
+		 * array the key of the subarray is prefixed to the placeholder key
+		 * separated by dot sign.
+		 *
+		 * @access public
+		 * @param string $value The value(s) the placeholder array is filled
+		 * with. If $value contains an array, all elements of the array are
+		 * filled into the placeholder array using key/value. If one array 
+		 * element contains a subarray the function will be called recursive
+		 * prefixing $keypath with the key of the subarray itself.
+		 * @param string $key The key $value will get in the placeholder array
+		 * if it is not an array, otherwise $key will be used as $keypath
+		 * @param string $keypath The string separated by dot sign $key will
+		 * be prefixed with
+		 */
+		public function CreateVars($value = '', $key = '', $keypath = '') {
 			$this->depth++;
 			if ($this->depth > $this->maxdepth) {
 				return;
 			}
-			$keypath = !empty($path) ? $path . "." . $key : $key;
+			$keypath = !empty($keypath) ? $keypath . "." . $key : $key;
 
 			if (is_array($value)) {
 				foreach ($value as $subkey => $subval) {
@@ -50,11 +112,24 @@ if (!class_exists('revoChunkie')) {
 			}
 		}
 
-		function AddVar($name, $value) {
-			$this->placeholders[$name] = $value;
+		/**
+		 * Add one value to the placeholder array with its key.
+		 *
+		 * @access public
+		 * @param string $key The key for the placeholder added
+		 * @param string $value The value for the placeholder added
+		 */
+		public function AddVar($key, $value) {
+			$this->CreateVars($value, $key);
 		}
 
-		function Render() {
+		/**
+		 * Render the current template with the current placeholders.
+		 *
+		 * @access public
+		 * @return string
+		 */
+		public function Render() {
 			global $modx;
 
 			$template = $this->template;
@@ -65,7 +140,18 @@ if (!class_exists('revoChunkie')) {
 			return $template;
 		}
 
-		function getTemplate($tpl) {
+		/**
+		 * Get a template chunk. All chunks retrieved by this function are
+		 * cached in $modx->chunkieCache for later reusage
+		 *
+		 * @access public
+		 * @param string $tpl The name of a MODX chunk (could be prefixed by
+		 * @FILE, @INLINE or @CHUNK). Chunknames starting with '@FILE ' are
+		 * loading a chunk from the filesystem (prefixed by $basepath).
+		 * Chunknames starting with '@INLINE ' contain the template code itself.
+		 * @return string
+		 */
+		public function getTemplate($tpl) {
 			global $modx;
 
 			$template = "";
@@ -105,8 +191,17 @@ if (!class_exists('revoChunkie')) {
 				$template = $modx->chunkieCache['@CHUNK'][$chunkname];
 			}
 
+			return $template;
+		}
+
+		/**
+		 * Change the template for rendering.
+		 *
+		 * @access public
+		 * @param string $template The new template string for rendering.
+		 */
+		public function setTemplate($template) {
 			$this->template = $template;
-			return $this->template;
 		}
 
 	}

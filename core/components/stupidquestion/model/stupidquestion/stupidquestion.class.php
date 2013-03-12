@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -19,55 +17,137 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package stupidquestion
- * 
- * StupidQuestion modX service class.
+ * @subpackage classfile
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
+ *
+ * StupidQuestion class.
  */
-
 if (!class_exists('JavaScriptPacker')) {
-	include SQ_BASE_PATH . 'model/packer/class.JavaScriptPacker.php';
+	include $corePath . 'model/packer/class.JavaScriptPacker.php';
 }
-include SQ_BASE_PATH . 'model/chunkie/chunkie.class.inc.php';
+include $corePath . 'model/chunkie/chunkie.class.inc.php';
 
 if (!class_exists('stupidQuestion')) {
 
 	class stupidQuestion {
 
-		public $output = array();
-		public $answer = array();
-		private $modx;
-		private $settings = array();
-		private $templates = array();
+		/**
+		 * The collection of output strings
+		 *
+		 * @var array $output
+		 * @access public
+		 */
+		public $output;
 
-		function __construct($modx, $language = 'en', $formcode = '', $answer = '') {
-			$this->modx = & $modx;
-			$this->prepareSettings($language, $answer);
-			$this->prepareTemplates($formcode);
+		/**
+		 * The answer of the stupid question
+		 *
+		 * @var string $answer
+		 * @access public
+		 */
+		public $answer;
+
+		/**
+		 * The formfield that has to be posted containing $answer
+		 *
+		 * @var string $formfield
+		 * @access public
+		 */
+		public $formfield;
+
+		/**
+		 * The MODX object
+		 *
+		 * @var mixed $modx
+		 * @access private
+		 */
+		private $modx;
+
+		/**
+		 * The stupidQuestion settings
+		 *
+		 * @var array $settings
+		 * @access private
+		 */
+		private $settings;
+
+		/**
+		 * The stupidQuestion templates
+		 *
+		 * @var array $templates
+		 * @access private
+		 */
+		private $templates;
+
+		/**
+		 * The core path to the stupidQuestion installation
+		 *
+		 * @var string $template
+		 * @access private
+		 */
+		private $corePath = '';
+
+		/**
+		 * stupidQuestion constructor
+		 *
+		 * @param mixed $modx The MODX object
+		 * @param array $options The options for this stupidQuestion.
+		 */
+		function __construct($modx, $options = array()) {
+			$this->output = array();
+			$this->answer = '';
+			$this->formfield = '';
+			$this->modx = &$modx;
+			$this->settings = array();
+			$this->templates = array();
+			$this->corePath = $this->modx->getOption('stupidquestion.core_path', null, MODX_CORE_PATH . 'components/stupidquestion/');
+
+			$this->prepareSettings($options);
+			$this->prepareTemplates($options);
 			$this->setQuestion();
 		}
 
-		// Return the include path of a configuration/template/whatever file
-		function includeFile($name, $type = 'config', $extension = '.inc.php') {
-
+		/**
+		 * Research an existing file by name, filetype and extension. The file
+		 * is searched in $type based folder with the following file name
+		 * $name.$type.$extension
+		 *
+		 * @access private
+		 * @param string $name The main name of the file
+		 * @param string $type The type of the file
+		 * @param string $extension The extension of the file
+		 * @return string An existing file name otherwise an error message
+		 */
+		private function researchFile($name, $type = 'config', $extension = '.inc.php') {
 			$folder = (substr($type, -1) != 'y') ? $type . 's/' : substr($folder, 0, -1) . 'ies/';
-			$allowedConfigs = glob(SQ_BASE_PATH . $folder . '*.' . $type . $extension);
+			$allowedFile = glob($this->corePath . $folder . '*.' . $type . $extension);
 			$configs = array();
-			foreach ($allowedConfigs as $config) {
+			foreach ($allowedFile as $config) {
 				$configs[] = preg_replace('=.*/' . $folder . '([^.]*).' . $type . $extension . '=', '$1', $config);
 			}
-
 			if (in_array($name, $configs)) {
-				$output = SQ_BASE_PATH . $folder . $name . '.' . $type . $extension;
+				$output = $this->corePath . $folder . $name . '.' . $type . $extension;
 			} else {
-				if (file_exists(SQ_BASE_PATH . $folder . 'default.' . $type . $extension)) {
-					$output = SQ_BASE_PATH . $folder . 'default.' . $type . $extension;
+				if (file_exists($this->corePath . $folder . 'default.' . $type . $extension)) {
+					$output = $this->corePath . $folder . 'default.' . $type . $extension;
 				} else {
-					$output = 'Allowed ' . $name . ' and default stupidQuestion ' . $type . ' file "' . SQ_BASE_PATH . $folder . 'default.' . $type . $extension . '" not found. Did you upload all files?';
+					$output = 'Allowed ' . $name . ' and default stupidQuestion ' . $type . ' file "' . $this->corePath . $folder . 'default.' . $type . $extension . '" not found. Did you upload all files?';
 				}
 			}
 			return $output;
 		}
 
-		function prepareSettings($language, $answer = '') {
+		/**
+		 * Prepare the settings for stupidQuestion
+		 *
+		 * @access private
+		 * @param array $options The options for this stupidQuestion.
+		 */
+		private function prepareSettings($options = array()) {
+			$language = $this->modx->getOption('language', $options, 'en');
+			$answer = $this->modx->getOption('answer', $options, '');
+
 			$this->modx->getService('lexicon', 'modLexicon');
 			$saveCultureKey = $this->modx->getOption('cultureKey');
 			$this->modx->setOption('cultureKey', $language);
@@ -88,18 +168,25 @@ if (!class_exists('stupidQuestion')) {
 			return;
 		}
 
-		function prepareTemplates($formcode) {
-			if ($formcode == '') {
-				$this->templates['formcode'] = '@FILE ' . $this->includeFile('formcode', 'template', '.html');
-			} else {
-				$this->templates['formcode'] = $formcode;
-			}
-			$this->templates['jscode'] = '@FILE ' . $this->includeFile('jscode', 'template', '.js');
-			$this->templates['jswrapper'] = '@FILE ' . $this->includeFile('jswrapper', 'template', '.js');
+		/**
+		 * Prepare the templates for stupidQuestion
+		 *
+		 * @access private
+		 * @param array $options The options for this stupidQuestion.
+		 */
+		private function prepareTemplates($options = array()) {
+			$this->templates['formcode'] = $this->modx->getOption('formcode', $options, '@FILE ' . $this->researchFile('formcode', 'template', '.html'), true);
+			$this->templates['jscode'] = $this->modx->getOption('jscode', $options, '@FILE ' . $this->researchFile('jscode', 'template', '.js'), true);
+			$this->templates['jswrapper'] = '@FILE ' . $this->researchFile('jswrapper', 'template', '.js');
 			return;
 		}
 
-		function setQuestion() {
+		/**
+		 * Set the session and generate the output
+		 *
+		 * @access private
+		 */
+		private function setQuestion() {
 			// Random values
 			$randQuestion = rand(0, count($this->settings['questions']) - 1);
 			$randIntro = rand(0, count($this->settings['intro']) - 1);
@@ -125,7 +212,7 @@ if (!class_exists('stupidQuestion')) {
 			$_SESSION['StupidQuestionFormField'] = $randFormField;
 			$_SESSION['StupidQuestionAnswer'] = $randAnswer;
 
-			// form fields
+			// prepare form placeholder/script placeholder values
 			$answer = explode(' ', $this->settings['answer'][$randAnswer]);
 			$value = ($randQuestion < count($this->settings['questions_first'])) ? $answer[0] : $answer[1];
 			$othervalue = ($randQuestion < count($this->settings['questions_first'])) ? $answer[1] : $answer[0];
@@ -137,14 +224,14 @@ if (!class_exists('stupidQuestion')) {
 			$parser->CreateVars(array(
 				'id' => $formField,
 				'othervalue' => $othervalue,
-				'value' => $value)
-			);
+				'value' => $value
+			));
 			$jsCode = $parser->Render();
 
 			$parser = new revoChunkie('@INLINE ' . $this->settings['intro'][$randIntro]);
 			$parser->CreateVars(array(
-				'question' => $frage . $this->settings['answer'][$randAnswer])
-			);
+				'question' => $frage . $this->settings['answer'][$randAnswer]
+			));
 			$question = $parser->Render();
 
 			$parser = new revoChunkie($this->templates['formcode']);
@@ -153,25 +240,32 @@ if (!class_exists('stupidQuestion')) {
 				'value' => $value,
 				'question' => $question,
 				'required' => $this->settings['required'],
-				'requiredMessage' => $this->settings['requiredMessage'])
-			);
+				'requiredMessage' => $this->settings['requiredMessage']
+			));
 			$this->output['htmlCode'] = $parser->Render();
 
-			$this->answer['answer'] = $value;
-			$this->answer['formfield'] = $formField;
+			$this->answer = $value;
+			$this->formfield = $formField;
 
 			$packer = new JavaScriptPacker($jsCode, 'Normal', true, false);
 			$parser = new revoChunkie($this->templates['jswrapper']);
 			$parser->CreateVars(array(
-				'packed' => trim($packer->pack()))
-			);
+				'packed' => trim($packer->pack())
+			));
 			$this->output['jsCode'] = $parser->Render();
 
 			return;
 		}
 
-		function checkAnswer() {
-			if (count($_POST) > 0 && $_POST[$this->answer['formfield']] != $this->answer['answer']) {
+		/**
+		 * Check $_POST for the answer
+		 *
+		 * @access public
+		 * @param string $basepath The basepath @FILE is prefixed with.
+		 * @return boolean True if stupid question is answered right.
+		 */
+		public function checkAnswer() {
+			if (count($_POST) > 0 && $_POST[$this->formfield] != $this->answer) {
 				$this->output['errorMessage'] = $this->settings['requiredMessage'];
 				return false;
 			} else {

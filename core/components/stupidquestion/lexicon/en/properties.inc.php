@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -20,10 +18,14 @@
  *
  * @package stupidquestion
  * @subpackage lexicon
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * Properties English Lexicon Entries for StupidQuestion
  */
 $_lang['prop_stupidquestion.stupidQuestionAnswers'] = 'Answers for the stupid question (JSON encoded array of \'forename name\' combinations)';
 $_lang['prop_stupidquestion.stupidQuestionLanguage'] = 'Language of the stupid question';
-$_lang['prop_stupidquestion.stupidQuestionFormcode'] = 'Template chunk for the stupid question html form field (defaults to the content of the file \'core/components/stupidquestion/templates/formcode.template.html\')';
+$_lang['prop_stupidquestion.stupidQuestionFormcode'] = 'Template chunk for the stupid question html form field (defaults to the content of the file \'{core}/components/stupidquestion/templates/formcode.template.html\')';
+$_lang['prop_stupidquestion.stupidQuestionScriptcode'] = 'Template chunk for the filling javascript (defaults to the content of the file \'{core}/components/stupidquestion/templates/jscode.template.js\')';
 $_lang['prop_stupidquestion.stupidQuestionRegister'] = 'Move the filling javascript to the end of the html body';
+$_lang['prop_stupidquestion.stupidQuestionNoScript'] = 'Remove the filling javascript';

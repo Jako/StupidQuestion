@@ -20,22 +20,28 @@ MODX Package Management
 Usage
 --------------------------------------------------------------------------------
 
-The snippet has to be used as FormIt preHook.
+The snippet has to be used as FormIt preHook and hook.
 
 [[!FormIt? &preHooks=`StupidQuestion` ...
 
 with the following properties
 
-Property               | Description                    | Default
----------------------- | -------------------------------| -------
-stupidQuestionAnswers  | Answers for the stupid         | language dependent
-                       | question - JSON encoded array  |
-                       | of forename name combinations  | 
-stupidQuestionLanguage | Language of the question       | en
-stupidQuestionFormcode | Template chunk for the stupid  | content of the file
-                       | question html form field       | formcode.template.html 
-stupidQuestionRegister | Move the filling javascript to | false
-                       | the end of the html body       |
+Property                 | Description                  | Default
+------------------------ | -----------------------------| -------
+stupidQuestionAnswers    | Answers for the stupid       | language dependent
+                         | question - JSON encoded      |
+                         | array of forename name       |
+                         |                combinations  |
+stupidQuestionLanguage   | Language of the question     | en
+stupidQuestionFormcode   | Template chunk for the       | content of the file
+                         | stupid question html form    | formcode.template.html
+                         | field                        |
+stupidQuestionScriptcode | Template chunk for the       | content of the file
+                         | filling javascript           | jscode.template.js
+stupidQuestionRegister   | Move the filling javascript  | false
+                         | to the end of the html body  |
+stupidQuestionNoScript   | Remove the filling           | false
+                         | javascript                   |
 
 If you want to change the html code for the stupid question form field, put 
 this default code in a chunk and modify it:
@@ -44,6 +50,14 @@ this default code in a chunk and modify it:
 	<label for="[[+id]]">[[+question]]</label>
 	<input type="text" name="[[+id]]" id="[[+id]]" [[!+fi.error.[[+id]]:notempty=`class="error"`]]/><span class="small">([[+required]])</span>[[!+fi.error.[[+id]]]]<br />
 </div>
+
+If you want to change the answers you could use this english lexicon setting as
+example:
+
+["Charlie Chaplin", "Albert Einstein", "Mary Smith", "Whoopi Goldberg"]
+
+All language specific strings could be changed by editing the lexicon entries
+in the stupidquestion namespace. Use the existing placeholders in these entries.
 
 Don't forget to place the [[!+formit.stupidquestion_html]] placeholder in the
 form code.

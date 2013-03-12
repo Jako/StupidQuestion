@@ -1,6 +1,6 @@
 <?php
-/*
- * StupidQuestion
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
  * 
@@ -20,6 +20,8 @@
  *
  * @package stupidquestion
  * @subpackage build
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * snippets for StupidQuestion package
  */

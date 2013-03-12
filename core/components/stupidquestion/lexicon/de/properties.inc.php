@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -20,10 +18,14 @@
  *
  * @package stupidquestion
  * @subpackage lexicon
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * Properties German Lexicon Entries for StupidQuestion
  */
 $_lang['prop_stupidquestion.stupidQuestionAnswers'] = 'Antworten auf die Dumme Frage (JSON codiertes Array mit \'Vorname Name\' Kombinationen)';
 $_lang['prop_stupidquestion.stupidQuestionLanguage'] = 'Sprache der Dummen Frage';
 $_lang['prop_stupidquestion.stupidQuestionFormcode'] = 'Template Chunk für den HTML-Code des Formularfelds (Standard: Inhalt der Datei \'core/components/stupidquestion/templates/formcode.template.html\')';
+$_lang['prop_stupidquestion.stupidQuestionScriptcode'] = 'Template Chunk für das ausfüllende Javascript (Standard: Inhalt der Datei \'core/components/stupidquestion/templates/jscode.template.js\')';
 $_lang['prop_stupidquestion.stupidQuestionRegister'] = 'Verschiebe das ausfüllende Javascript an das Ende des HTML-Body';
+$_lang['prop_stupidquestion.stupidQuestionNoScript'] = 'Entferne das ausfüllende Javascript';

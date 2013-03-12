@@ -1,6 +1,6 @@
 <?php
-/*
- * StupidQuestion
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
  * 
@@ -20,6 +20,8 @@
  *
  * @package stupidquestion
  * @subpackage build
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * Properties for the StupidQuestion snippet.
  */
@@ -49,8 +51,24 @@ $properties = array(
 		'lexicon' => 'stupidquestion:properties',
 	),
 	array(
+		'name' => 'stupidQuestionScriptcode',
+		'desc' => 'prop_stupidquestion.stupidQuestionScriptcode',
+		'type' => 'textfield',
+		'options' => '',
+		'value' => '',
+		'lexicon' => 'stupidquestion:properties',
+	),
+	array(
 		'name' => 'stupidQuestionRegister',
 		'desc' => 'prop_stupidquestion.stupidQuestionRegister',
+		'type' => 'combo-boolean',
+		'options' => '',
+		'value' => false,
+		'lexicon' => 'stupidquestion:properties',
+	),
+	array(
+		'name' => 'stupidQuestionNoScript',
+		'desc' => 'prop_stupidquestion.stupidQuestionNoScript',
 		'type' => 'combo-boolean',
 		'options' => '',
 		'value' => false,

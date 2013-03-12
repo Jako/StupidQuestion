@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -20,6 +18,8 @@
  *
  * @package stupidquestion
  * @subpackage lexicon
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
  *
  * German Lexicon Entries for StupidQuestion
  */

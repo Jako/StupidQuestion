@@ -1,8 +1,6 @@
 <?php
-/*
- * StupidQuestion
- * 
- * Copyright 2010-2012 by Thomas Jakobi <thomas.jakobi@partout.info>
+/**
+ * StupidQuestion - Userfriendly Captcha for MODX Revolution
  * 
  * StupidQuestion is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -19,35 +17,40 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  * @package stupidquestion
- * 
+ * @subpackage snippetfile
+ * @author Thomas Jakobi <thomas.jakobi@partout.info>
+ * @copyright Copyright 2010-2013, Thomas Jakobi
+ * @version 0.7.2
+ *
  * StupidQuestion snippet.
  */
+$corePath = $modx->getOption('stupidquestion.core_path', null, MODX_CORE_PATH . 'components/stupidquestion/');
 
-// set base path
-define(SQ_PATH, 'components/stupidquestion/');
-define(SQ_BASE_PATH, MODX_CORE_PATH . SQ_PATH);
-
-include SQ_BASE_PATH . 'model/stupidquestion/stupidquestion.class.php';
-
-$answers = $modx->getOption('stupidQuestionAnswers', $scriptProperties, '');
-$language = $modx->getOption('stupidQuestionLanguage', $scriptProperties, 'en');
-$formcode = $modx->getOption('stupidQuestionFormcode', $scriptProperties, '');
-$register = (boolean) $modx->getOption('stupidQuestionRegister', $scriptProperties, '0');
+$options = array();
+$options['answers'] = $modx->getOption('stupidQuestionAnswers', $scriptProperties, '');
+$options['language'] = $modx->getOption('stupidQuestionLanguage', $scriptProperties, 'en');
+$options['formcode'] = $modx->getOption('stupidQuestionFormcode', $scriptProperties, '');
+$options['scriptcode'] = $modx->getOption('stupidQuestionScriptcode', $scriptProperties, '');
+$options['register'] = (boolean) $modx->getOption('stupidQuestionRegister', $scriptProperties, false);
+$options['noscript'] = (boolean) $modx->getOption('stupidQuestionNoScript', $scriptProperties, false);
 
 // Init class
+include $corePath . 'model/stupidquestion/stupidquestion.class.php';
 if (!isset($modx->stupidQuestion)) {
-	$modx->stupidQuestion = new stupidQuestion($modx, $language, $formcode, $answers);
+	$modx->stupidQuestion = new stupidQuestion($modx, $options);
 }
 
-if (!$register) {
-	$modx->stupidQuestion->output['htmlCode'] .= $modx->stupidQuestion->output['jsCode'];
-} else {
-	$modx->regClientScript($modx->stupidQuestion->output['jsCode']);
+if (!$options['noscript']) {
+	if (!$options['register']) {
+		$modx->stupidQuestion->output['htmlCode'] .= $modx->stupidQuestion->output['jsCode'];
+	} else {
+		$modx->regClientScript($modx->stupidQuestion->output['jsCode']);
+	}
 }
 $modx->setPlaceholder('formit.stupidquestion_html', $modx->stupidQuestion->output['htmlCode']);
 
 if (!$modx->stupidQuestion->checkAnswer()) {
-	$modx->setPlaceholder('fi.error.' . $modx->stupidQuestion->answer['formfield'], '<span class="error">' . $modx->stupidQuestion->output['errorMessage'] . '</span>');
+	$hook->addError($modx->stupidQuestion->formfield, $modx->stupidQuestion->output['errorMessage']);
 	return false;
 }
 return true;
