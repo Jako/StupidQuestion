@@ -40,6 +40,13 @@ if (!class_exists('revoChunkie')) {
 		private $parseLazy;
 
 		/**
+		 * Array of placeholders that are not parsed but only replaced.
+		 * @var string $replaceOnly
+		 * @access private
+		 */
+		private $replaceOnly;
+
+		/**
 		 * A collection of all placeholders.
 		 * @var array $placeholders
 		 * @access private
@@ -78,6 +85,7 @@ if (!class_exists('revoChunkie')) {
 				$this->basepath = MODX_BASE_PATH . $modx->getOption('basepath', $options, ''); // Basepath @FILE is prefixed with.
 			}
 			$this->parseLazy = $modx->getOption('parseLazy', $options, FALSE);
+			$this->replaceOnly = (array) $modx->getOption('replaceOnly', $options, array());
 		}
 
 		/**
@@ -135,6 +143,14 @@ if (!class_exists('revoChunkie')) {
 		}
 
 		/**
+		 * Get the placeholder array.
+		 *
+		 * @access public
+		 */
+        public function getVars() {
+            return $this->placeholders;
+        }
+		/**
 		 * Render the current template with the current placeholders.
 		 *
 		 * @access public
@@ -149,7 +165,12 @@ if (!class_exists('revoChunkie')) {
 			$template = $chunk->process($this->placeholders, $template);
 			unset($chunk);
 			if ($this->parseLazy) {
-				$template = str_replace(array('##!'), array('[[!'), $template);
+				$template = str_replace(array('[[#!'), array('[[!'), $template);
+			}
+			if (count($this->replaceOnly)) {
+				foreach ($this->replaceOnly as $placeholdername) {
+					$template = str_replace('[[#+' . $placeholdername . ']]', $this->placeholders[$placeholdername], $template);
+				}
 			}
 			return $template;
 		}
@@ -206,7 +227,13 @@ if (!class_exists('revoChunkie')) {
 			}
 
 			if ($this->parseLazy) {
-				$template = str_replace('[[!', '##!', $template);
+				$template = str_replace('[[!', '[[#!', $template);
+			}
+
+			if (count($this->replaceOnly)) {
+				foreach ($this->replaceOnly as $placeholdername) {
+					$template = str_replace('[[+' . $placeholdername . ']]', '[[#+' . $placeholdername . ']]', $template);
+				}
 			}
 
 			return $template;
