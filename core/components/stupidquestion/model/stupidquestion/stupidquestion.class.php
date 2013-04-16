@@ -221,38 +221,38 @@ if (!class_exists('stupidQuestion')) {
 
 			// parse stupid question template and javscript template
 			$parser = new revoChunkie($this->templates['jscode']);
-			$parser->CreateVars(array(
+			$parser->createVars(array(
 				'id' => $formField,
 				'othervalue' => $othervalue,
 				'value' => $value
 			));
-			$jsCode = $parser->Render();
+			$jsCode = $parser->render();
 
 			$parser = new revoChunkie('@INLINE ' . $this->settings['intro'][$randIntro]);
-			$parser->CreateVars(array(
+			$parser->createVars(array(
 				'question' => $frage . $this->settings['answer'][$randAnswer]
 			));
-			$question = $parser->Render();
+			$question = $parser->render();
 
 			$parser = new revoChunkie($this->templates['formcode']);
-			$parser->CreateVars(array(
+			$parser->createVars(array(
 				'id' => $formField,
 				'value' => $value,
 				'question' => $question,
 				'required' => $this->settings['required'],
 				'requiredMessage' => $this->settings['requiredMessage']
 			));
-			$this->output['htmlCode'] = $parser->Render();
+			$this->output['htmlCode'] = $parser->render();
 
 			$this->answer = $value;
 			$this->formfield = $formField;
 
 			$packer = new JavaScriptPacker($jsCode, 'Normal', true, false);
 			$parser = new revoChunkie($this->templates['jswrapper']);
-			$parser->CreateVars(array(
+			$parser->createVars(array(
 				'packed' => trim($packer->pack())
 			));
-			$this->output['jsCode'] = $parser->Render();
+			$this->output['jsCode'] = $parser->render();
 
 			return;
 		}

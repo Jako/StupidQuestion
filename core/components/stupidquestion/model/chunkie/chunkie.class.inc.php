@@ -3,14 +3,13 @@
  * Name: revoChunkie
  * Original name: Chunkie
  * Version: 2.0
- * 
+ *
  * Author: Armand "bS" Pondman <apondman@zerobarrier.nl>
  * Date: Oct 8, 2006
  *
  * Modified and documented for Revolution by Thomas Jakobi <thomas.jakobi@partout.info>
  * Date: Mar 11, 2013
  */
-
 if (!class_exists('revoChunkie')) {
 
 	class revoChunkie {
@@ -32,6 +31,13 @@ if (!class_exists('revoChunkie')) {
 		 * @access private
 		 */
 		private $basepath;
+
+		/**
+		 * Uncached MODX tags are not parsed inside of revoChunkie.
+		 * @var string $parseLazy
+		 * @access private
+		 */
+		private $parseLazy;
 
 		/**
 		 * A collection of all placeholders.
@@ -58,15 +64,20 @@ if (!class_exists('revoChunkie')) {
 		 * revoChunkie constructor
 		 *
 		 * @param string $template Name of MODX chunk
-		 * @param string $basepath Basepath @FILE is prefixed with.
+		 * @param array $options options for this instance of revoChunkie
 		 */
-		public function revoChunkie($template = '', $basepath = '') {
+		public function revoChunkie($template = '', $options = array()) {
 			global $modx;
 
 			$this->template = $this->getTemplate($template);
 			$this->depth = 0;
 			$this->maxdepth = 4;
-			$this->basepath = ($basepath == '') ? $modx->getOption('core_path') : $modx->getOption('base_path') . $basepath;
+			if ($modx->getOption('useCorePath', $options, FALSE)) {
+				$this->basepath = MODX_CORE_PATH . $modx->getOption('basepath', $options, ''); // Basepath @FILE is prefixed with.
+			} else {
+				$this->basepath = MODX_BASE_PATH . $modx->getOption('basepath', $options, ''); // Basepath @FILE is prefixed with.
+			}
+			$this->parseLazy = $modx->getOption('parseLazy', $options, FALSE);
 		}
 
 		/**
@@ -87,7 +98,7 @@ if (!class_exists('revoChunkie')) {
 		 * @access public
 		 * @param string $value The value(s) the placeholder array is filled
 		 * with. If $value contains an array, all elements of the array are
-		 * filled into the placeholder array using key/value. If one array 
+		 * filled into the placeholder array using key/value. If one array
 		 * element contains a subarray the function will be called recursive
 		 * prefixing $keypath with the key of the subarray itself.
 		 * @param string $key The key $value will get in the placeholder array
@@ -95,7 +106,7 @@ if (!class_exists('revoChunkie')) {
 		 * @param string $keypath The string separated by dot sign $key will
 		 * be prefixed with
 		 */
-		public function CreateVars($value = '', $key = '', $keypath = '') {
+		public function createVars($value = '', $key = '', $keypath = '') {
 			$this->depth++;
 			if ($this->depth > $this->maxdepth) {
 				return;
@@ -104,9 +115,9 @@ if (!class_exists('revoChunkie')) {
 
 			if (is_array($value)) {
 				foreach ($value as $subkey => $subval) {
-					$this->CreateVars($subval, $subkey, $keypath);
-					$this->depth--;
+					$this->createVars($subval, $subkey, $keypath);
 				}
+				$this->depth--;
 			} else {
 				$this->placeholders[$keypath] = $value;
 			}
@@ -119,8 +130,8 @@ if (!class_exists('revoChunkie')) {
 		 * @param string $key The key for the placeholder added
 		 * @param string $value The value for the placeholder added
 		 */
-		public function AddVar($key, $value) {
-			$this->CreateVars($value, $key);
+		public function addVar($key, $value) {
+			$this->placeholders[$key] = $value;
 		}
 
 		/**
@@ -129,7 +140,7 @@ if (!class_exists('revoChunkie')) {
 		 * @access public
 		 * @return string
 		 */
-		public function Render() {
+		public function render() {
 			global $modx;
 
 			$template = $this->template;
@@ -137,6 +148,9 @@ if (!class_exists('revoChunkie')) {
 			$chunk->setCacheable(false);
 			$template = $chunk->process($this->placeholders, $template);
 			unset($chunk);
+			if ($this->parseLazy) {
+				$template = str_replace(array('##!'), array('[[!'), $template);
+			}
 			return $template;
 		}
 
@@ -189,6 +203,10 @@ if (!class_exists('revoChunkie')) {
 					}
 				}
 				$template = $modx->chunkieCache['@CHUNK'][$chunkname];
+			}
+
+			if ($this->parseLazy) {
+				$template = str_replace('[[!', '##!', $template);
 			}
 
 			return $template;
