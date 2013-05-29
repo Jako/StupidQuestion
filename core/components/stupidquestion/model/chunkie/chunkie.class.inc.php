@@ -2,13 +2,14 @@
 /**
  * Name: revoChunkie
  * Original name: Chunkie
- * Version: 2.0
- *
- * Author: Armand "bS" Pondman <apondman@zerobarrier.nl>
- * Date: Oct 8, 2006
+ * Version: 2.1
  *
  * Modified and documented for Revolution by Thomas Jakobi <thomas.jakobi@partout.info>
- * Date: Mar 11, 2013
+ * Date: May 19, 2013
+ *
+ * Original Author: Armand "bS" Pondman <apondman@zerobarrier.nl>
+ * Date: Oct 8, 2006
+ *
  */
 if (!class_exists('revoChunkie')) {
 
@@ -76,7 +77,6 @@ if (!class_exists('revoChunkie')) {
 		public function revoChunkie($template = '', $options = array()) {
 			global $modx;
 
-			$this->template = $this->getTemplate($template);
 			$this->depth = 0;
 			$this->maxdepth = 4;
 			if ($modx->getOption('useCorePath', $options, FALSE)) {
@@ -84,6 +84,7 @@ if (!class_exists('revoChunkie')) {
 			} else {
 				$this->basepath = MODX_BASE_PATH . $modx->getOption('basepath', $options, ''); // Basepath @FILE is prefixed with.
 			}
+			$this->template = $this->getTemplate($template);
 			$this->parseLazy = $modx->getOption('parseLazy', $options, FALSE);
 			$this->replaceOnly = (array) $modx->getOption('replaceOnly', $options, array());
 		}
@@ -115,13 +116,13 @@ if (!class_exists('revoChunkie')) {
 		 * be prefixed with
 		 */
 		public function createVars($value = '', $key = '', $keypath = '') {
-			$this->depth++;
 			if ($this->depth > $this->maxdepth) {
 				return;
 			}
 			$keypath = !empty($keypath) ? $keypath . "." . $key : $key;
 
 			if (is_array($value)) {
+				$this->depth++;
 				foreach ($value as $subkey => $subval) {
 					$this->createVars($subval, $subkey, $keypath);
 				}
@@ -147,9 +148,10 @@ if (!class_exists('revoChunkie')) {
 		 *
 		 * @access public
 		 */
-        public function getVars() {
-            return $this->placeholders;
-        }
+		public function getVars() {
+			return $this->placeholders;
+		}
+
 		/**
 		 * Render the current template with the current placeholders.
 		 *
