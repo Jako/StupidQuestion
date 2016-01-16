@@ -32,7 +32,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME', 'StupidQuestion');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
-define('PKG_VERSION', '0.7.2');
+define('PKG_VERSION', '0.7.3');
 define('PKG_RELEASE', 'pl');
 
 /* define sources */

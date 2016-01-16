@@ -43,6 +43,7 @@ if (!isset($modx->stupidQuestion)) {
 if (!$options['noscript']) {
 	if (!$options['register']) {
 		$modx->stupidQuestion->output['htmlCode'] .= $modx->stupidQuestion->output['jsCode'];
+        $modx->stupidQuestion->output['jsCode'] = '';
 	} else {
 		$modx->regClientScript($modx->stupidQuestion->output['jsCode']);
 	}
