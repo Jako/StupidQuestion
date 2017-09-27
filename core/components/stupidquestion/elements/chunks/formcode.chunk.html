@@ -1,0 +1,5 @@
+<div class="form-group">
+    <label for="[[+id]]">[[+question]]</label>
+    <input type="text" name="[[+id]]" id="[[+id]]" class="form-control" [[!+fi.error.[[+id]]:notempty=`class="error"`]] autocomplete="off">
+    [[!+fi.error.[[+id]]:notempty=`<span class="help-block">[[!+fi.error.[[+id]]]]</span>`]]
+</div>

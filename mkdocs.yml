@@ -1,0 +1,34 @@
+site_name: StupidQuestion
+docs_dir: core/components/stupidquestion/docs/mkdocs
+site_dir: _build/site
+edit_uri: tree/master/core/components/stupidquestion/docs/mkdocs
+
+repo_name: 'Jako/StupidQuestion-Revo'
+repo_url: https://github.com/Jako/StupidQuestion-Revo
+
+copyright: '&copy; 2010-2017 <a href="https://treehillstudio.com">Treehill Studio</a>'
+
+pages:
+- Description: 'index.md'
+- Installation: 'installation.md'
+- Usage: 'usage.md'
+- Donate: 'donate.md'
+
+extra:
+  font:
+    text: 'Dosis'
+    heading: 'Ubuntu'
+
+piwik_analytics:
+  site_id: 23
+  piwik_url: '//piwik.partout.info/'
+
+theme: 'material'
+theme_dir: '/Users/jako/Documents/MODx/MkDocs Material/material'
+
+markdown_extensions:
+  - footnotes
+  - tables
+  - admonition
+  - meta
+  - toc(permalink=true)

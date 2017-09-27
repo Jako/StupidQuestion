@@ -1,0 +1,49 @@
+{
+  "name": "StupidQuestion",
+  "lowCaseName": "stupidquestion",
+  "description": "Userfriendly Captcha Solution for FormIt.",
+  "author": "Thomas Jakobi",
+  "version": "0.8.0",
+  "package": {
+    "elements": {
+      "snippets": [
+        {
+          "name": "StupidQuestion",
+          "file": "stupidquestion.hook.php",
+          "description": "Stupid question captcha hook for FormIt.",
+          "properties": [
+            {
+              "name": "stupidQuestionAnswers",
+              "value": ""
+            },
+            {
+              "name": "stupidQuestionLanguage",
+              "value": ""
+            },
+            {
+              "name": "stupidQuestionFormcode",
+              "value": ""
+            },
+            {
+              "name": "stupidQuestionScriptcode",
+              "value": ""
+            },
+            {
+              "name": "stupidQuestionRegister",
+              "value": ""
+            },
+            {
+              "name": "stupidQuestionNoScript",
+              "value": ""
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "build": {
+    "readme": "docs/readme.txt",
+    "license": "docs/license.txt",
+    "changelog": "docs/changelog.txt"
+  }
+}

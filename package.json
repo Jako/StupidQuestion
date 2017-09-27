@@ -1,0 +1,8 @@
+{
+  "name": "StupidQuestion",
+  "description": "Userfriendly Captcha Solution for FormIt.",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-string-replace": "^1.3.1"
+  }
+}
