@@ -1,7 +1,7 @@
 StupidQuestion
 ==============
 
-StupidQuestion is a MODX Revolution userfriendly captcha solution for FormIt.
+StupidQuestion is a userfriendly captcha solution for FormIt in MODX Revolution.
 
 Installation
 ------------
@@ -9,8 +9,8 @@ MODX Package Management
 
 Documentation
 -------------
-http://jako.github.io/StupidQuestion-Revo/
+http://jako.github.io/StupidQuestion-revo/
 
 GitHub Repository
 -----------------
-https://github.com/Jako/StupidQuestion-Revo
+https://github.com/Jako/StupidQuestion-revo

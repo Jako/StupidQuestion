@@ -3,8 +3,8 @@ docs_dir: core/components/stupidquestion/docs/mkdocs
 site_dir: _build/site
 edit_uri: tree/master/core/components/stupidquestion/docs/mkdocs
 
-repo_name: 'Jako/StupidQuestion-Revo'
-repo_url: https://github.com/Jako/StupidQuestion-Revo
+repo_name: 'Jako/StupidQuestion-revo'
+repo_url: https://github.com/Jako/StupidQuestion-revo
 
 copyright: '&copy; 2010-2017 <a href="https://treehillstudio.com">Treehill Studio</a>'
 
