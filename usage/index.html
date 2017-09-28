@@ -221,8 +221,6 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="toc">
         Usage
@@ -236,15 +234,13 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#notes" title="Notes:" class="md-nav__link">
-    Notes:
+  <a href="#set-the-formit-hooks" title="Set the FormIt hooks" class="md-nav__link">
+    Set the FormIt hooks
   </a>
   
 </li>
@@ -284,15 +280,13 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#notes" title="Notes:" class="md-nav__link">
-    Notes:
+  <a href="#set-the-formit-hooks" title="Set the FormIt hooks" class="md-nav__link">
+    Set the FormIt hooks
   </a>
   
 </li>
@@ -314,7 +308,9 @@
                   <a href="https://github.com/Jako/StupidQuestion-revo/tree/master/core/components/stupidquestion/docs/mkdocs/usage.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h1>
+                  <h1>Usage</h1>
+                
+                <h2 id="set-the-formit-hooks">Set the FormIt hooks<a class="headerlink" href="#set-the-formit-hooks" title="Permanent link">&para;</a></h2>
 <p>The snippet has to be used as FormIt preHook and hook.</p>
 <pre><code>[[!FormIt? 
 &amp;preHooks=`StupidQuestion,...` 
@@ -335,7 +331,7 @@
 <tbody>
 <tr>
 <td>stupidQuestionAnswers</td>
-<td>Answers for the stupid question (JSON encoded array of \'forename name\' combinations)</td>
+<td>Answers for the stupid question (JSON encoded array of 'forename name' combinations)</td>
 <td>language dependent</td>
 </tr>
 <tr>
@@ -379,11 +375,6 @@
 
 <p>All language specific strings could be changed by editing the lexicon entries in the stupidquestion namespace. Use the existing placeholders in these entries.</p>
 <p>Don't forget to place the <code>[[!+formit.stupidquestion_html]]</code> placeholder in the form code.</p>
-<h3 id="notes">Notes:<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Uses PHP packer implementation from http://joliclic.free.fr/php/javascript-packer/en/</li>
-<li>Bases on a captcha idea of Peter Kröner: http://www.peterkroener.de/dumme-frage-captchas-automatisch-ausfuellen/</li>
-</ol>
                 
                   
                 
