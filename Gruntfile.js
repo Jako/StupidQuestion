@@ -10,7 +10,7 @@ module.exports = function (grunt) {
                 }],
                 options: {
                     replacements: [{
-                        pattern: /Copyright 2010(-\d{4})? by/g,
+                        pattern: /Copyright \d{4}(-\d{4})? by/g,
                         replacement: 'Copyright ' + (new Date().getFullYear() > 2010 ? '2010-' : '') + new Date().getFullYear() + ' by'
                     }]
                 }
