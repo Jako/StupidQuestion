@@ -3,7 +3,7 @@
   "description": "Userfriendly Captcha Solution for FormIt.",
   "author": "Thomas Jakobi",
   "devDependencies": {
-    "grunt": "^1.0.3",
+    "grunt": "^1.0.4",
     "grunt-string-replace": "^1.3.1"
   }
 }
