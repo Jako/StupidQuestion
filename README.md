@@ -9,4 +9,4 @@ hyphens the right answer is not placed at the same position. The filling bots
 have to execute javascript - a lot don't do that.
 
 For more information please read the
-[documentation](http://jako.github.io/StupidQuestion-revo/).
+[documentation](https://jako.github.io/StupidQuestion-revo/).
