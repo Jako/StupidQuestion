@@ -52,12 +52,12 @@
         }, 
         {
             "location": "/donate/", 
-            "text": "Support StupidQuestion\n\n\nStupidQuestion\n is and always will be free and open-source, but it still requires many man-hours of development, \nbug-fixing, support in MODX forums and on GitHub between the releases.\n\n\nPlease support the ongoing and past development of \nStupidQuestion\n by making a donation below.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStupidQuestion\n development is sponsored by Treehillstudio \u2013 MODX Development in M\u00fcnsterland.", 
+            "text": "Support StupidQuestion\n\n\nStupidQuestion\n is and always will be free and open-source, but it still\nrequires many man-hours of development, bug-fixing, support in MODX forums and\non GitHub between the releases.\n\n\nPlease support the ongoing and past development of \nStupidQuestion\n by making a\ndonation below.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nStupidQuestion\n development is sponsored by Treehillstudio \u2013 MODX Development in M\u00fcnsterland.", 
             "title": "Donate"
         }, 
         {
             "location": "/donate/#support-stupidquestion", 
-            "text": "StupidQuestion  is and always will be free and open-source, but it still requires many man-hours of development, \nbug-fixing, support in MODX forums and on GitHub between the releases.  Please support the ongoing and past development of  StupidQuestion  by making a donation below.           StupidQuestion  development is sponsored by Treehillstudio \u2013 MODX Development in M\u00fcnsterland.", 
+            "text": "StupidQuestion  is and always will be free and open-source, but it still\nrequires many man-hours of development, bug-fixing, support in MODX forums and\non GitHub between the releases.  Please support the ongoing and past development of  StupidQuestion  by making a\ndonation below.            StupidQuestion  development is sponsored by Treehillstudio \u2013 MODX Development in M\u00fcnsterland.", 
             "title": "Support StupidQuestion"
         }
     ]
