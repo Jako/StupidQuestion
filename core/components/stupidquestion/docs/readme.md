@@ -9,8 +9,8 @@ MODX Package Management
 
 Documentation
 -------------
-https://jako.github.io/StupidQuestion-revo/
+https://jako.github.io/StupidQuestion/
 
 GitHub Repository
 -----------------
-https://github.com/Jako/StupidQuestion-revo
+https://github.com/Jako/StupidQuestion
