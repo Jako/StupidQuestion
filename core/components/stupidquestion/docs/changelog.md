@@ -15,12 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added: stupidQuestionScriptcode parameter
 - Added: stupidQuestionNoScript parameter
 - Documentation: StupidQuestion has to be used as preHook **and** as hook
-    
 
 ## [0.7.1] - 2012-12-28
 
 - Added: stupidQuestionRegister parameter
-    
 
 ## [0.7.0] - 2012-10-28
 
